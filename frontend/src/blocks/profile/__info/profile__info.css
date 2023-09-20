@@ -1,0 +1,14 @@
+.profile__info{
+  width: 100%;
+}
+
+@media screen and (min-width: 1280px){
+.profile__info{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 23px 0 0 30px;
+  max-height: 73px;
+}
+}

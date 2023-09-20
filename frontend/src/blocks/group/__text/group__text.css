@@ -1,0 +1,5 @@
+.group__text{
+  margin: auto 20px;
+  display: flex;
+  justify-content: space-between;
+}

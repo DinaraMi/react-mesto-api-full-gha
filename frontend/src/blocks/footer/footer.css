@@ -1,0 +1,15 @@
+.footer{
+  width: 88.125%;
+  max-width: 880px;
+
+  color: #545454;
+  margin: 48px auto 36px;
+}
+
+@media screen and (min-width: 1280px){
+  .footer{
+    font-size: 18px;
+    line-height: 122.22%;
+    margin: 65px auto 55px;
+  }
+}

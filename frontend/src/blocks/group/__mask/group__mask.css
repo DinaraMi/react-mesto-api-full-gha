@@ -1,0 +1,7 @@
+.group__mask{
+  width: 282px;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: 10px 10px 0 0;
+  display: block;
+}

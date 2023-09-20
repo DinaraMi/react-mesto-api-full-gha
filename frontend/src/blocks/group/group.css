@@ -1,0 +1,17 @@
+.group{
+  width: 88.125%;
+  max-width: 880px;
+  color: #000000;
+  margin: auto;
+  display: grid;
+  grid-template-columns: repeat( auto-fit, 282px);
+  gap: 15px;
+  justify-content: center;
+}
+
+@media screen and (min-width: 1280px){
+  .group{
+    column-gap: 17px;
+  }
+}
+

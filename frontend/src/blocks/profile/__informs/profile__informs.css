@@ -1,0 +1,15 @@
+.profile__informs{
+  margin: 23px 20px 12px 45px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+@media screen and (min-width: 1280px){
+  .profile__informs{
+    gap: 18px;
+    margin: 0;
+  }
+}

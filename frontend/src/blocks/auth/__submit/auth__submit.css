@@ -1,0 +1,29 @@
+.auth__submit{
+  width: 100%;
+  min-height: 46px;
+  background-color: #FFFFFF;
+  color: #000000;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 138.29%;
+  text-align: center;
+  border-radius: 2px;
+  padding: 0;
+  margin: 120px 0 15px 0;
+  cursor: pointer;
+}
+
+.popup__submit:hover{
+  opacity: 0.8;
+}
+
+@media screen and (min-width: 1280px){
+  .auth__submit{
+    font-size: 18px;
+    line-height: 121%;
+    min-width: 358px;
+    min-height: 50px;
+    margin-top: 180px;
+  }
+}

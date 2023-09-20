@@ -1,0 +1,14 @@
+.footer__paragraph{
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+  margin: 0;
+}
+
+@media screen and (min-width: 1280px){
+  .footer__paragraph{
+    font-size: 18px;
+    line-height: 122.22%;
+  }
+}

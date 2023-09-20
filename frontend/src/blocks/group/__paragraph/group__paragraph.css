@@ -1,0 +1,13 @@
+.group__paragraph{
+  font-style: normal;
+  font-weight: 900;
+  font-size: 24px;
+  line-height: 120.83%;
+  width: 224px;
+  display: block;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  margin: 23px auto 28px;
+}
+

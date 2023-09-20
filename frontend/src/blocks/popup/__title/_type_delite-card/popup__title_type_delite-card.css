@@ -1,0 +1,16 @@
+.popup__title_type_delite-card{
+  font-style: normal;
+  font-weight: 900;
+  font-size: 18px;
+  line-height: 122.22%;
+  margin: 25px 22px 45px;
+  align-self: start;
+}
+
+@media screen and (min-width: 1280px){
+  .popup__title_type_delite-card{
+    font-size: 24px;
+    line-height: 120.83%;
+    margin: 34px 64px 24px 0;
+  }
+}

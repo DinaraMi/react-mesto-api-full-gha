@@ -1,0 +1,8 @@
+.group__element{
+  background-color: white;
+  margin: 0;
+  padding-left: 0;
+  border-radius: 10px;
+  width: 282px;
+  position: relative;
+}
