@@ -1,3 +1,5 @@
+const mongoose = require('mongoose');
+
 const Card = require('../models/card');
 const { Ok, Created } = require('../utils/contants');
 const NotFoundError = require('../errors/NotFoundError');
@@ -49,17 +51,19 @@ module.exports.deleteCard = (req, res, next) => {
 module.exports.likeCard = (req, res, next) => {
   const { cardId } = req.params;
   const userId = req.user._id;
+  if (!mongoose.Types.ObjectId.isValid(cardId)) {
+    throw new ValidationError('Некорректный формат ID карточки');
+  }
   Card.findByIdAndUpdate(
     cardId,
     { $addToSet: { likes: userId } },
     { new: true },
   )
-    // .populate(['likes', 'owner'])
     .then((card) => {
       if (!card) {
-        return next(new NotFoundError('Карточка не найдена'));
+        throw new NotFoundError('Карточка не найдена');
       }
-      return res.send(card);
+      return res.status(card.likes.length === 1 ? Ok : Created).json(card);
     })
     .catch(next);
 };
@@ -67,6 +71,9 @@ module.exports.likeCard = (req, res, next) => {
 module.exports.dislikeCard = (req, res, next) => {
   const { cardId } = req.params;
   const userId = req.user._id;
+  if (!mongoose.Types.ObjectId.isValid(cardId)) {
+    throw new ValidationError('Некорректный формат ID карточки');
+  }
   Card.findByIdAndUpdate(
     cardId,
     { $pull: { likes: userId } },
@@ -74,9 +81,9 @@ module.exports.dislikeCard = (req, res, next) => {
   )
     .then((card) => {
       if (!card) {
-        return next(new NotFoundError('Карточка не найдена'));
+        throw new NotFoundError('Карточка не найдена');
       }
-      return res.send(card);
+      return res.status(Ok).json(card);
     })
     .catch(next);
 };
