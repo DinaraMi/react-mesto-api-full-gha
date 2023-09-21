@@ -6,14 +6,14 @@ const ForbiddenError = require('../errors/ForbiddenError');
 
 module.exports.getCards = (req, res, next) => {
   Card.find({})
-    .then((cards) => res.status(Ok).send({ data: cards }))
+    .then((cards) => res.status(Ok).send(cards))
     .catch(next);
 };
 
 module.exports.createCard = (req, res, next) => {
   const { name, link } = req.body;
   Card.create({ name, link, owner: req.user._id })
-    .then((card) => res.status(Created).send({ data: card }))
+    .then((card) => res.status(Created).send(card))
     .catch((error) => {
       if (error.name === 'ValidationError') {
         next(new ValidationError(`Некорректные данные: ${error.message}`));
@@ -39,7 +39,7 @@ module.exports.deleteCard = (req, res, next) => {
           if (!deletedCard) {
             return next(new NotFoundError('Карточка не найдена'));
           }
-          return res.send({ data: deletedCard });
+          return res.send(deletedCard);
         })
         .catch(next);
     })
@@ -54,11 +54,12 @@ module.exports.likeCard = (req, res, next) => {
     { $addToSet: { likes: userId } },
     { new: true },
   )
+    // .populate(['likes', 'owner'])
     .then((card) => {
       if (!card) {
         return next(new NotFoundError('Карточка не найдена'));
       }
-      return res.send({ data: card });
+      return res.send(card);
     })
     .catch(next);
 };
@@ -75,7 +76,7 @@ module.exports.dislikeCard = (req, res, next) => {
       if (!card) {
         return next(new NotFoundError('Карточка не найдена'));
       }
-      return res.send({ data: card });
+      return res.send(card);
     })
     .catch(next);
 };

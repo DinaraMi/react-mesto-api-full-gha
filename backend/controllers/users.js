@@ -14,10 +14,15 @@ module.exports.createUser = (req, res, next) => {
     email,
     password,
   } = req.body;
-  let userToCreate;
-  bcrypt.hash(password, 10)
+  User.findOne({ email })
+    .then((existingUser) => {
+      if (existingUser) {
+        return next(new ConflictError('Пользователь с таким email уже существует'));
+      }
+      return bcrypt.hash(password, 10);
+    })
     .then((hash) => {
-      userToCreate = {
+      const userToCreate = {
         name,
         about,
         avatar,
@@ -34,14 +39,11 @@ module.exports.createUser = (req, res, next) => {
         email: user.email,
         _id: user._id,
       };
-      return res.status(Created).send({ data: responseData });
+      return res.status(Created).send(responseData);
     })
     .catch((error) => {
       if (error.name === 'ValidationError') {
         return next(new ValidationError(`Некорректные данные: ${error.message}`));
-      }
-      if (error.code === 11000) {
-        return next(new ConflictError('Пользователь с таким email уже существует'));
       }
       return next(error);
     });
@@ -49,7 +51,7 @@ module.exports.createUser = (req, res, next) => {
 
 module.exports.getUsers = (req, res, next) => {
   User.find({})
-    .then((users) => res.status(Ok).send({ data: users }))
+    .then((users) => res.status(Ok).send(users))
     .catch(next);
 };
 
@@ -60,7 +62,7 @@ module.exports.getUserId = (req, res, next) => {
       if (!user) {
         throw new NotFoundError('Пользователь с таким id не найден');
       }
-      return res.status(Ok).send({ data: user });
+      return res.status(Ok).send(user);
     })
     .catch((error) => {
       if (error.name === 'ValidationError') {
@@ -82,7 +84,7 @@ module.exports.updateProfile = (req, res, next) => {
       if (!user) {
         throw new NotFoundError('Пользователь с таким id не найден');
       }
-      return res.status(Ok).send({ data: user });
+      return res.status(Ok).send(user);
     })
     .catch((error) => {
       if (error.name === 'ValidationError') {
@@ -104,7 +106,7 @@ module.exports.updateAvatar = (req, res, next) => {
       if (!user) {
         throw new NotFoundError('Пользователь с таким id не найден');
       }
-      return res.status(Ok).send({ data: user });
+      return res.status(Ok).send(user);
     })
     .catch((error) => {
       if (error.name === 'ValidationError') {
@@ -134,7 +136,7 @@ module.exports.getUserInfo = (req, res, next) => {
       if (!userInfo) {
         throw new NotFoundError('Пользователь с таким id не найден');
       }
-      res.status(200).send({ data: userInfo });
+      res.status(200).send(userInfo);
     })
     .catch((error) => {
       if (error.name === 'ValidationError') {

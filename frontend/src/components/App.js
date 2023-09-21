@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { Routes, Route, useNavigate } from 'react-router-dom';
 import Header from './Header';
 import Main from './Main';
@@ -33,6 +33,8 @@ function App() {
   const [userEmail, setUserEmail] = useState('');
   const navigate = useNavigate();
   useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
     api.getUserInformation()
       .then((dataUser) => {
         setCurrentUser(dataUser)
@@ -45,7 +47,7 @@ function App() {
         setCards(dataCards);
       })
       .catch(console.error);
-  }, []);
+  }}, [loggedIn]);
   const openImagePopup = () => {
     setImagePopupOpen(true);
   };
@@ -99,7 +101,7 @@ function App() {
     handleAllClosePopup();
   };
   const handleCardLike = (card) => {
-    const isLiked = card.likes.some(i => i._id === currentUser._id);
+    const isLiked = card.likes.some(id => id === currentUser._id);
     if (isLiked) {
       api.deleteLike(card._id)
         .then((newCard) => {
@@ -211,13 +213,14 @@ function App() {
       }
     }
   }, [loggedIn]);
-  const handleAutoLogin = (token) => {
+  const handleAutoLogin = useCallback((token) => {
     setLoading(true);
     localStorage.setItem('token', token);
     setLoggedIn(true);
     navigate('/');
     setLoading(false);
-  };
+  }, [navigate, setLoggedIn, setLoading]);
+  
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {
@@ -243,7 +246,8 @@ function App() {
       setLoggedIn(false);
       setLoading(false);
     }
-  }, []);
+  }, [handleAutoLogin, setLoggedIn, setUserEmail, setLoading]);
+  
   const handleLogout = () => {
     authentication.removeToken();
     setLoggedIn(false);
