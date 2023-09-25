@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Routes, Route, useNavigate } from 'react-router-dom';
 import Header from './Header';
 import Main from './Main';
@@ -213,14 +213,13 @@ function App() {
       }
     }
   }, [loggedIn]);
-  const handleAutoLogin = useCallback((token) => {
+  const handleAutoLogin = (token) => {
     setLoading(true);
     localStorage.setItem('token', token);
     setLoggedIn(true);
     navigate('/');
     setLoading(false);
-  }, [navigate, setLoggedIn, setLoading]);
-  
+  };
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {
@@ -246,8 +245,8 @@ function App() {
       setLoggedIn(false);
       setLoading(false);
     }
-  }, [handleAutoLogin, setLoggedIn, setUserEmail, setLoading]);
-  
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   const handleLogout = () => {
     authentication.removeToken();
     setLoggedIn(false);

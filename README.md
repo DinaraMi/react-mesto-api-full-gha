@@ -28,7 +28,7 @@ REST API
 frontend - клиентская часть приложения, созданная с использованием React.js.
 backend - серверная часть приложения, написанная на Node.js с использованием Express.js и MongoDB.
 
-IP-адрес 51.250.108.153
+IP-адрес: `51.250.108.153`
 
 Frontend https://photo.space.nomoredomainsrocks.ru
 
