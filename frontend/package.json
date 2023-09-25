@@ -16,7 +16,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "deploy": "npm run build && scp -r ./build/* dinarami@51.250.108.153:/home/dinarami/react-mesto-api-full-gha/frontend/build"
   },
   "eslintConfig": {
     "extends": [
