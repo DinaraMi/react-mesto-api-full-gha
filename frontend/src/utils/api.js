@@ -101,7 +101,7 @@ class Api {
   }
 }
 const api = new Api({
-  baseUrl: 'https://api.server.nomoredomainsrocks.ru',
+  baseUrl: 'api.server.nomoredomainsrocks.ru',
   headers: {
     'Content-Type': 'application/json'
   }
