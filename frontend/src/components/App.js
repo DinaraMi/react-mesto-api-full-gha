@@ -189,15 +189,19 @@ function App() {
           navigate('/');
         } else if (data && data.statusCode === 401) {
           console.log('Неверные email или пароль');
+          handleRegisterFailure("Неверные email или пароль");
+          setInfoTooltipOpen(true);
         } else {
           console.log('Что-то пошло не так!');
+          handleRegisterFailure("Что-то пошло не так");
+          setInfoTooltipOpen(true);
         }
       })
       .catch(console.error)
       .finally(() => {
         setLoading(false);
       });
-  };
+  };  
   useEffect(() => {
     if (loggedIn) {
       const token = authentication.getToken();

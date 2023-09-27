@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken');
+require('dotenv').config();
 const UnauthorizedError = require('../errors/UnauthorizedError');
 
 module.exports = (req, res, next) => {
@@ -8,10 +9,10 @@ module.exports = (req, res, next) => {
   }
   const token = authorization.replace('Bearer ', '');
   try {
-    const payload = jwt.verify(token, 'some-secret-key');
+    const payload = jwt.verify(token, process.env.JWT_SECRET); // Используем переменную окружения
     req.user = payload;
     return next();
-  } catch (error) { // Здесь изменена переменная err на error
-    return next(new UnauthorizedError('Ошибка аутентификации')); // Создаем и передаем кастомную ошибку
+  } catch (error) {
+    return next(new UnauthorizedError('Ошибка аутентификации'));
   }
 };
