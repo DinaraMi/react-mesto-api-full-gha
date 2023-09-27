@@ -10,7 +10,15 @@ const { handleErrors } = require('./middlewares/handleErrors');
 
 const { PORT = 3000 } = process.env;
 const app = express();
-app.use(cors());
+
+const corsOptions = {
+  origin: 'https://photo.space.nomoredomainsrocks.ru',
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  credentials: true,
+  optionsSuccessStatus: 204,
+};
+app.use(cors(corsOptions));
+
 app.use(helmet());
 app.use(express.json());
 const limiter = rateLimit({
