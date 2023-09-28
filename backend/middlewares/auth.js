@@ -9,7 +9,8 @@ module.exports = (req, res, next) => {
   }
   const token = authorization.replace('Bearer ', '');
   try {
-    const payload = jwt.verify(token, process.env.JWT_SECRET); // Используем переменную окружения
+    const secretKey = process.env.JWT_SECRET || 'default_secret_key';
+    const payload = jwt.verify(token, secretKey);
     req.user = payload;
     return next();
   } catch (error) {
